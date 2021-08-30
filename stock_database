@@ -5,8 +5,6 @@
 -- Dumped from database version 10.17
 -- Dumped by pg_dump version 10.17
 
--- Started on 2021-08-28 11:18:27
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -19,7 +17,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 1 (class 3079 OID 12924)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -27,8 +24,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2826 (class 0 OID 0)
--- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -40,52 +35,49 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 197 (class 1259 OID 24584)
 -- Name: balance_sheet; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.balance_sheet (
     code character varying(25) NOT NULL,
-    current_assets money,
-    cash_equivalents money,
-    short_term_investments money,
-    current_receivables money,
-    inventories money,
-    other_current_assets money,
-    long_term_assets money,
-    long_term_receivables money,
-    tangible_assets money,
-    intangible_assets money,
-    goodwill money,
-    total_assets money,
-    current_liabilities money,
-    long_term_debt money,
-    total_liabilities money,
-    noncontrolling_interests money,
-    stock_treasury money,
-    preferred_shares money
+    current_assets numeric,
+    cash_equivalents numeric,
+    short_term_investments numeric,
+    current_receivables numeric,
+    inventories numeric,
+    other_current_assets numeric,
+    long_term_assets numeric,
+    long_term_receivables numeric,
+    tangible_assets numeric,
+    intangible_assets numeric,
+    goodwill numeric,
+    total_assets numeric,
+    current_liabilities numeric,
+    long_term_debt numeric,
+    total_liabilities numeric,
+    noncontrolling_interests numeric,
+    stock_treasury numeric,
+    preferred_shares numeric
 );
 
 
 ALTER TABLE public.balance_sheet OWNER TO postgres;
 
 --
--- TOC entry 199 (class 1259 OID 24594)
 -- Name: cash_flow_statement; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.cash_flow_statement (
     code character varying(25) NOT NULL,
-    cash_from_operations money,
-    cash_from_investing money,
-    cash_from_financing money
+    cash_from_operations numeric,
+    cash_from_investing numeric,
+    cash_from_financing numeric
 );
 
 
 ALTER TABLE public.cash_flow_statement OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 24629)
 -- Name: financial_statement; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -101,22 +93,20 @@ CREATE TABLE public.financial_statement (
 ALTER TABLE public.financial_statement OWNER TO postgres;
 
 --
--- TOC entry 198 (class 1259 OID 24589)
 -- Name: income_statement; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.income_statement (
     code character varying(25) NOT NULL,
-    total_revenue money,
-    income_before_tax money,
-    net_income money
+    total_revenue numeric,
+    income_before_tax numeric,
+    net_income numeric
 );
 
 
 ALTER TABLE public.income_statement OWNER TO postgres;
 
 --
--- TOC entry 196 (class 1259 OID 16394)
 -- Name: stocks; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -125,7 +115,7 @@ CREATE TABLE public.stocks (
     exchange character varying(10) NOT NULL,
     symbol character varying(5) NOT NULL,
     name character varying(255),
-    current_price money,
+    current_price numeric,
     total_shares bigint,
     public_on date
 );
@@ -134,7 +124,6 @@ CREATE TABLE public.stocks (
 ALTER TABLE public.stocks OWNER TO postgres;
 
 --
--- TOC entry 2687 (class 2606 OID 24679)
 -- Name: balance_sheet balance_sheet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -143,7 +132,6 @@ ALTER TABLE ONLY public.balance_sheet
 
 
 --
--- TOC entry 2691 (class 2606 OID 24672)
 -- Name: cash_flow_statement cash_flow_statement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -152,7 +140,6 @@ ALTER TABLE ONLY public.cash_flow_statement
 
 
 --
--- TOC entry 2693 (class 2606 OID 24655)
 -- Name: financial_statement financial_statement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -161,7 +148,6 @@ ALTER TABLE ONLY public.financial_statement
 
 
 --
--- TOC entry 2689 (class 2606 OID 24686)
 -- Name: income_statement income_statement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -170,7 +156,6 @@ ALTER TABLE ONLY public.income_statement
 
 
 --
--- TOC entry 2685 (class 2606 OID 16398)
 -- Name: stocks stocks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -179,7 +164,6 @@ ALTER TABLE ONLY public.stocks
 
 
 --
--- TOC entry 2696 (class 2606 OID 24673)
 -- Name: cash_flow_statement fk_statement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -188,7 +172,6 @@ ALTER TABLE ONLY public.cash_flow_statement
 
 
 --
--- TOC entry 2694 (class 2606 OID 24680)
 -- Name: balance_sheet fk_statement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -197,7 +180,6 @@ ALTER TABLE ONLY public.balance_sheet
 
 
 --
--- TOC entry 2695 (class 2606 OID 24687)
 -- Name: income_statement fk_statement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -206,15 +188,12 @@ ALTER TABLE ONLY public.income_statement
 
 
 --
--- TOC entry 2697 (class 2606 OID 24634)
 -- Name: financial_statement fk_stock; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.financial_statement
     ADD CONSTRAINT fk_stock FOREIGN KEY (stock) REFERENCES public.stocks(code);
 
-
--- Completed on 2021-08-28 11:18:27
 
 --
 -- PostgreSQL database dump complete
