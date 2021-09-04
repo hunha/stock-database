@@ -39,7 +39,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE public.balance_sheet (
-    code character varying(25) NOT NULL,
+    code character varying(30) NOT NULL,
     current_assets numeric,
     cash_equivalents numeric,
     short_term_investments numeric,
@@ -68,7 +68,7 @@ ALTER TABLE public.balance_sheet OWNER TO postgres;
 --
 
 CREATE TABLE public.cash_flow_statement (
-    code character varying(25) NOT NULL,
+    code character varying(30) NOT NULL,
     cash_from_operations numeric,
     cash_from_investing numeric,
     cash_from_financing numeric
@@ -82,7 +82,7 @@ ALTER TABLE public.cash_flow_statement OWNER TO postgres;
 --
 
 CREATE TABLE public.financial_statement (
-    code character varying(25) NOT NULL,
+    code character varying(30) NOT NULL,
     stock character varying(15) NOT NULL,
     statement_type character(10) NOT NULL,
     statement_year smallint NOT NULL,
@@ -97,7 +97,7 @@ ALTER TABLE public.financial_statement OWNER TO postgres;
 --
 
 CREATE TABLE public.income_statement (
-    code character varying(25) NOT NULL,
+    code character varying(30) NOT NULL,
     total_revenue numeric,
     income_before_tax numeric,
     net_income numeric
@@ -164,19 +164,19 @@ ALTER TABLE ONLY public.stocks
 
 
 --
--- Name: cash_flow_statement fk_statement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cash_flow_statement
-    ADD CONSTRAINT fk_statement FOREIGN KEY (code) REFERENCES public.financial_statement(code) NOT VALID;
-
-
---
 -- Name: balance_sheet fk_statement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.balance_sheet
-    ADD CONSTRAINT fk_statement FOREIGN KEY (code) REFERENCES public.financial_statement(code) NOT VALID;
+    ADD CONSTRAINT fk_statement FOREIGN KEY (code) REFERENCES public.financial_statement(code) ON UPDATE CASCADE NOT VALID;
+
+
+--
+-- Name: cash_flow_statement fk_statement; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cash_flow_statement
+    ADD CONSTRAINT fk_statement FOREIGN KEY (code) REFERENCES public.financial_statement(code) ON UPDATE CASCADE NOT VALID;
 
 
 --
@@ -184,7 +184,7 @@ ALTER TABLE ONLY public.balance_sheet
 --
 
 ALTER TABLE ONLY public.income_statement
-    ADD CONSTRAINT fk_statement FOREIGN KEY (code) REFERENCES public.financial_statement(code) NOT VALID;
+    ADD CONSTRAINT fk_statement FOREIGN KEY (code) REFERENCES public.financial_statement(code) ON UPDATE CASCADE NOT VALID;
 
 
 --
